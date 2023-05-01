@@ -1,6 +1,7 @@
 # 导入需要的库
 import cv2
 from threading import Thread
+import numpy as np
 from ultralytics import YOLO
 
 # 初始化变量
