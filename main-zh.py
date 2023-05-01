@@ -54,29 +54,29 @@ def record_faces(frame, result):
             # 重置人脸录取次数
             face_count = 0
 
-    # 获取人脸位置信息
-    boxes = result[0].boxes
-    
-    # 保存人脸图像和位置信息到文件
-    if face_count >= 0 and face_count < 100:
-        # 记录到验证集
-        filepath = f'train/dataset/images/val/{face_count}.png'
-        labelspath = f'train/dataset/labels/val/{face_count}.txt'
-    else:
-        # 记录到训练集
-        filepath = f'train/dataset/images/train/{face_count}.png'
-        labelspath = f'train/dataset/labels/train/{face_count}.txt'
-        
-    # 保存人脸图像
-    cv2.imwrite(filepath, frame)
+        # 获取人脸位置信息
+        boxes = result[0].boxes
 
-    # 保存位置信息到文件
-    with open(labelspath, 'w') as file:
-        for bboxes in boxes:
-            for xywh in bboxes.xywh:
-                xywh = xywh * np.array([1/frame.shape[1], 1/frame.shape[0], 1/frame.shape[1], 1/frame.shape[0]])
-                file.write(f'0 {xywh[0]} {xywh[1]} {xywh[2]} {xywh[3]}\n')
-                
+        # 保存人脸图像和位置信息到文件
+        if face_count >= 0 and face_count < 100:
+            # 记录到验证集
+            filepath = f'train/dataset/images/val/{face_count}.png'
+            labelspath = f'train/dataset/labels/val/{face_count}.txt'
+        else:
+            # 记录到训练集
+            filepath = f'train/dataset/images/train/{face_count}.png'
+            labelspath = f'train/dataset/labels/train/{face_count}.txt'
+
+        # 保存人脸图像
+        cv2.imwrite(filepath, frame)
+
+        # 保存位置信息到文件
+        with open(labelspath, 'w') as file:
+            for bboxes in boxes:
+                for xywh in bboxes.xywh:
+                    xywh = xywh * np.array([1/frame.shape[1], 1/frame.shape[0], 1/frame.shape[1], 1/frame.shape[0]])
+                    file.write(f'0 {xywh[0]} {xywh[1]} {xywh[2]} {xywh[3]}\n')
+
 # 主函数
 def main():
     init_variables()
