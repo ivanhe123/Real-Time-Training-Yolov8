@@ -9,7 +9,7 @@ def init_variables():
     global model, train_new_yolo, face_count,training, epochs, dataset_collected, cap
 
     #get Yolov8 face model
-    model = YOLO('yolov8_pretrained/yolov8n-face-2.pt')
+    model = YOLO('train/yolov8n-face.pt')
 
     #initialize threading
     train_new_yolo = Thread(target=train_it)
