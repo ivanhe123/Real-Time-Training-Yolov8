@@ -6,7 +6,7 @@ from ultralytics import YOLO
 
 #initialize all variables
 def init_variables():
-    global model, train_new_yolo, face_count,training, epochs, dataset_collected, cap
+    global model, train_new_yolo, face_count,training, epochs, cap
 
     #get Yolov8 face model
     model = YOLO('train/yolov8n-face.pt')
