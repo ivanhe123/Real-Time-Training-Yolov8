@@ -9,7 +9,7 @@ def init_variables():
     global model, face_count, epochs, training, cap
     
     # 导入人脸检测模型
-    model = YOLO('yolov8_pretrained/yolov8n-face-2.pt')
+    model = YOLO('train/yolov8n-face.pt')
     
     # 初始化同步运行训练模块
     train_new_yolo = Thread(target=train_it)
