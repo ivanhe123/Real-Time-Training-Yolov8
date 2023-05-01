@@ -18,4 +18,4 @@ If you wanted to see the .pt model you just trained, open runs/detect/ after tra
 
 For more information, you can try reading the comments in one of the two python files. The one with zh is the Chinese version while the file with en is the English version.
 
-The Chinese explaination is written by me, it can be found in this url: https://blog.csdn.net/walchina2017/article/details/130334374
+The Chinese explaination is written by me, it can be found in this webpage: https://blog.csdn.net/walchina2017/article/details/130334374
