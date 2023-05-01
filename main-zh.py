@@ -6,7 +6,7 @@ from ultralytics import YOLO
 
 # 初始化变量
 def init_variables():
-    global model, face_count, epochs, training, cap
+    global model, train_new_yolo, face_count,training, epochs, cap
     
     # 导入人脸检测模型
     model = YOLO('train/yolov8n-face.pt')
