@@ -1,4 +1,4 @@
-# Real-Time-Learning-Yolov8
+# Real-Time-Training-Yolov8
 
 For this particular example, the code will run the task of detecting a face while training.
 
