@@ -19,3 +19,11 @@ If you wanted to see the .pt model you just trained, open runs/detect/ after tra
 For more information, you can try reading the comments in one of the two python files. The one with zh is the Chinese version while the file with en is the English version.
 
 The Chinese explaination is written by me, it can be found in this webpage: https://blog.csdn.net/walchina2017/article/details/130334374
+
+By the way, this is the first implementation of real-time learning for now.
+
+Also, Real-time learning is also real-time training.
+
+I founded the concept of real-time training.
+
+P.S. If you think you found real-time training/learning first, please send me an email: helloworld202110@163.com. And provide evidences to prove yourself.
