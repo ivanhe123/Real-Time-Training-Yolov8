@@ -1,6 +1,4 @@
 # Real-Time-Learning-Yolov8
-Real Time Learning is not the normal concept that others see on most papers on the internet.
-Infact, it is just what it means, a kind of code that allows an AI to learn (train a model) when it is running.
 
 For this particular example, the code will run the task of detecting a face while training.
 
