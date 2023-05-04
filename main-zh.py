@@ -54,7 +54,8 @@ def record_faces(frame, result):
             face_count += 1
         else:
             # 开始训练新模型
-
+            train_new_yolo.start()
+            
             # 将在训练设为 True（在训练）
             training = True
 
