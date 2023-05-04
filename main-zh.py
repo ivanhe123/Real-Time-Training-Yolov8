@@ -7,7 +7,7 @@ from ultralytics import YOLO
 
 # 初始化变量
 def init_variables():
-    global model, train_new_yolo, face_count, training, epochs, cap
+
 
     # 导入人脸检测模型
     model = YOLO('train/yolov8n-face.pt')
@@ -26,6 +26,8 @@ def init_variables():
 
     # 初始化摄像头
     cap = cv2.VideoCapture(0)
+
+    return model, train_new_yolo, face_count, training, epochs, cap
 
 
 # 训练函数
@@ -84,35 +86,31 @@ def record_faces(frame, result):
                     file.write(f'0 {xywh[0]} {xywh[1]} {xywh[2]} {xywh[3]}\n')
 
 
-# 主函数
-def main():
-    init_variables()
-    train_new_yolo.start()
-
-    while True:
-        # 读取实时图像
-        ret, frame = cap.read()
-
-        # 获取检测的结果
-        results = model.predict(frame)
-
-        # 记录人脸
-        record_faces(frame, results)
-
-        # 在图像上绘制检测结果
-        annotated = results[0].plot()
-
-        # 显示画出来的效果
-        cv2.imshow('returned', annotated)
-
-        # 检测是否要退出
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    # 释放摄像头并关闭窗口
-    cap.release()
-    cv2.destroyAllWindows()
 
 
-if __name__ == "__main__":
-    main()
+model, train_new_yolo, face_count, training, epochs, cap = init_variables()
+
+while True:
+    # 读取实时图像
+    ret, frame = cap.read()
+
+    # 获取检测的结果
+    results = model.predict(frame)
+
+    # 记录人脸
+    record_faces(frame, results)
+
+    # 在图像上绘制检测结果
+    annotated = results[0].plot()
+
+    # 显示画出来的效果
+    cv2.imshow('returned', annotated)
+
+    # 检测是否要退出
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# 释放摄像头并关闭窗口
+cap.release()
+cv2.destroyAllWindows()
+
