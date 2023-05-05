@@ -23,9 +23,12 @@ def init_variables():
 
     # initialize camera
     cap = cv2.VideoCapture(0)
+    
+    MAX_FACE_COUNT = 600
+    
+    VALIDATION_SPLIT_COUNT = 200
 
-    return model, face_count, training, epochs, cap
-
+    return model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT
 
 
 # rercord frames and labels + start training process function
@@ -50,7 +53,7 @@ def record_faces(frame, result):
         boxes = result[0].boxes
         if bool(boxes.numpy()):
             # then, see if the number datas are collected enough):
-            if face_count < 300:
+            if face_count < MAX_FACE_COUNT:
                 # if number of data is not enough, add more
                 face_count += 1
             else:
@@ -64,7 +67,7 @@ def record_faces(frame, result):
                 face_count = 0
 
             # see if the index of data recorded is in the interval between 0 and 99:
-            if face_count >= 0 and face_count < 100:
+            if face_count >= 0 and face_count < VALIDATION_SPLIT_COUNT:
                 # if the index of data is in the interval between 0 and 99
                 filepath = f'train/dataset/images/val/{face_count}.png'
                 labelspath = f'train/dataset/labels/val/{face_count}.txt'
@@ -86,7 +89,7 @@ def record_faces(frame, result):
 
 
 # call init_variables function to initialize variables
-model, face_count, training, epochs, cap=init_variables()
+model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT=init_variables()
 while True:
 
     # capture frames in real-time
