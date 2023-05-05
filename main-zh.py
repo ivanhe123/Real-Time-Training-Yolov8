@@ -10,7 +10,7 @@ def init_variables():
 
 
     # 导入人脸检测模型
-    model = YOLO("runs/detect/train19/weights/best.pt")
+    model = YOLO("train/yolov8n-face.pt")
 
     # 初始化同步运行训练模块
     #train_new_yolo = Thread(target=train_it)
