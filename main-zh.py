@@ -10,7 +10,7 @@ def init_variables():
 
 
     # 导入人脸检测模型
-    model = YOLO('train/yolov8n-face.pt')
+    model = YOLO("runs/detect/train19/weights/best.pt")
 
     # 初始化同步运行训练模块
     #train_new_yolo = Thread(target=train_it)
@@ -27,7 +27,11 @@ def init_variables():
     # 初始化摄像头
     cap = cv2.VideoCapture(0)
 
-    return model, face_count, training, epochs, cap
+    MAX_FACE_COUNT = 600
+
+    VALIDATION_SPLIT_COUNT = 200
+
+    return model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT
 
 
 
@@ -47,12 +51,12 @@ def record_faces(frame, result):
             training = False
         Thread(target=do).start()
     # 检测是否在训练
-    if not training
+    if not training:
         boxes = result[0].boxes
         if bool(boxes.numpy()):
             #检测是否需要继续记录人脸
             
-            if face_count < 300:
+            if face_count < MAX_FACE_COUNT:
                 face_count += 1
             else:
                 # 开始训练新模型
@@ -68,7 +72,7 @@ def record_faces(frame, result):
             boxes = result[0].boxes
 
             # 保存人脸图像和位置信息到文件
-            if face_count >= 0 and face_count < 100:
+            if face_count >= 0 and face_count < VALIDATION_SPLIT_COUNT:
                 # 记录到验证集
                 filepath = f'train/dataset/images/val/{face_count}.png'
                 labelspath = f'train/dataset/labels/val/{face_count}.txt'
@@ -88,7 +92,7 @@ def record_faces(frame, result):
                             [1 / frame.shape[1], 1 / frame.shape[0], 1 / frame.shape[1], 1 / frame.shape[0]])
                         file.write(f'0 {xywh[0]} {xywh[1]} {xywh[2]} {xywh[3]}\n')
                 file.close()
-model,face_count, training, epochs, cap = init_variables()
+model,face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT = init_variables()
 
 while True:
     # 读取实时图像
