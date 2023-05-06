@@ -12,8 +12,6 @@ The training function is a thread that can run parallel with the detection syste
 
 After the training is complete, the model will be automaticly replaced by the newest one.
 
-If you wanted to see the .pt model you just trained, open runs/detect/ after training, open the last folder (meaning this will be the last model you trained before another train starts), open the weights folder, and find best.pt.
-
 For more information, you can try reading the comments in one of the two python files. The one with zh is the Chinese version while the file with en is the English version.
 
 The Chinese explaination is written by me, it can be found in this webpage: https://blog.csdn.net/walchina2017/article/details/130334374
