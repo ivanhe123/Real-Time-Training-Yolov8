@@ -34,7 +34,7 @@ def init_variables():
     else:
         MAX_METRICS = 0
 
-    MAX_FACE_COUNT = 1600
+    MAX_FACE_COUNT = 1800
 
     VALIDATION_SPLIT_COUNT = 600
 
