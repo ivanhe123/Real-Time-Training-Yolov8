@@ -2,6 +2,7 @@
 import cv2
 from threading import Thread
 import numpy as np
+import os
 from ultralytics import YOLO
 
 
@@ -22,30 +23,44 @@ def init_variables():
     training = False
 
     # 初始化 epochs
-    epochs = 5
+    epochs = 1
 
     # 初始化摄像头
     cap = cv2.VideoCapture(0)
 
-    MAX_FACE_COUNT = 600
+    if len(os.listdir('train/dataset/images/train')) > 0 and len(os.listdir('train/dataset/images/val')) > 0:
 
-    VALIDATION_SPLIT_COUNT = 200
+        MAX_METRICS = model.val(data='train/custom_data.yaml').box.map
+    else:
+        MAX_METRICS = 0
 
-    return model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT
+    MAX_FACE_COUNT = 1200
+
+    VALIDATION_SPLIT_COUNT = 600
+
+    return model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT, MAX_METRICS
 
 
 
 # 记录人脸函数
 def record_faces(frame, result):
-    global face_count, training, model
+    global face_count, training, model, MAX_METRICS
     # 训练函数
     def train_it():
-        global model, training
+        global model, training, MAX_METRICS
         def do():
-            global model, training
+            global model, training, MAX_METRICS
 
+            m = model
+            
             # 训练模型
-            model.train(data='train/custom_data.yaml', epochs=epochs)
+            m.train(data='train/custom_data.yaml', epochs=epochs)
+
+            metrics = m.val()
+
+            if float(metrics.box.map) > float(MAX_METRICS):
+                MAX_METRICS = metrics.box.map
+                model = m
 
             # 将在训练设为 False（不在训练）
             training = False
@@ -92,7 +107,7 @@ def record_faces(frame, result):
                             [1 / frame.shape[1], 1 / frame.shape[0], 1 / frame.shape[1], 1 / frame.shape[0]])
                         file.write(f'0 {xywh[0]} {xywh[1]} {xywh[2]} {xywh[3]}\n')
                 file.close()
-model,face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT = init_variables()
+model,face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT, MAX_METRICS = init_variables()
 
 while True:
     # 读取实时图像
