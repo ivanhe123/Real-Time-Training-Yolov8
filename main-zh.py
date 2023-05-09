@@ -23,7 +23,7 @@ def init_variables():
     training = False
 
     # 初始化 epochs
-    epochs = 1
+    epochs = 5
 
     # 初始化摄像头
     cap = cv2.VideoCapture(0)
@@ -34,7 +34,7 @@ def init_variables():
     else:
         MAX_METRICS = 0
 
-    MAX_FACE_COUNT = 1200
+    MAX_FACE_COUNT = 1600
 
     VALIDATION_SPLIT_COUNT = 600
 
