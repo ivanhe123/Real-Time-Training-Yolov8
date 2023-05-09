@@ -1,6 +1,7 @@
 # import the needed modules
 import cv2
 import numpy as np
+import os
 from threading import Thread
 from ultralytics import YOLO
 
@@ -28,7 +29,20 @@ def init_variables():
     
     VALIDATION_SPLIT_COUNT = 200
 
-    return model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT
+    cap = cv2.VideoCapture(0)
+
+    if len(os.listdir('train/dataset/images/train')) > 0 and len(os.listdir('train/dataset/images/val')) > 0:
+
+        MAX_METRICS = model.val(data='train/custom_data.yaml').box.map
+    else:
+        MAX_METRICS = 0
+
+    MAX_FACE_COUNT = 10
+
+    VALIDATION_SPLIT_COUNT = 2
+
+    return model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT, MAX_METRICS
+
 
 
 # rercord frames and labels + start training process function
@@ -40,9 +54,16 @@ def record_faces(frame, result):
         global model, training
         def do():
             global model, training
+            m = model
+                
+            m.train(data='train/custom_data.yaml', epochs=epochs)
 
+            metrics = m.val()
 
-            model.train(data='train/custom_data.yaml', epochs=epochs)
+            if float(metrics.box.map) > float(MAX_METRICS):
+                MAX_METRICS = metrics.box.map
+                model = m
+
 
             training = False
         Thread(target=do).start()
@@ -89,7 +110,7 @@ def record_faces(frame, result):
 
 
 # call init_variables function to initialize variables
-model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT=init_variables()
+model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT, MAX_METRICS=init_variables()
 while True:
 
     # capture frames in real-time
@@ -114,5 +135,4 @@ while True:
 cap.release()
 
 cv2.destroyAllWindows()
-
 
