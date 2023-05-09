@@ -25,9 +25,9 @@ def init_variables():
     # initialize camera
     cap = cv2.VideoCapture(0)
     
-    MAX_FACE_COUNT = 600
+    MAX_FACE_COUNT = 1800
     
-    VALIDATION_SPLIT_COUNT = 200
+    VALIDATION_SPLIT_COUNT = 600
 
     cap = cv2.VideoCapture(0)
 
@@ -36,10 +36,6 @@ def init_variables():
         MAX_METRICS = model.val(data='train/custom_data.yaml').box.map
     else:
         MAX_METRICS = 0
-
-    MAX_FACE_COUNT = 10
-
-    VALIDATION_SPLIT_COUNT = 2
 
     return model, face_count, training, epochs, cap, MAX_FACE_COUNT, VALIDATION_SPLIT_COUNT, MAX_METRICS
 
