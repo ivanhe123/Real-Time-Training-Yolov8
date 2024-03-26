@@ -15,3 +15,5 @@ After the training is complete, the model will be automaticly replaced by the ne
 For more information, you can try reading the comments in one of the two python files. The one with zh is the Chinese version while the file with en is the English version.
 
 The Chinese explaination is written by me, it can be found in this webpage: https://blog.csdn.net/walchina2017/article/details/130334374
+
+*NOTE* Only main_en.py and main_zh.py is updated.
